@@ -10,320 +10,511 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f7f5f0; --surface:#ffffff; --surface-2:#f0ede6; --ink:#1f1d1a; --ink-2:#5b574f;
-  --line:#e2ddd2; --accent:#d9480f; --accent-soft:#fff0e6; --blue:#1c6dd0; --blue-soft:#e8f1fc;
-  --green:#2b8a3e; --green-soft:#e9f7ec; --red:#c92a2a; --red-soft:#fdecec; --shadow:0 1px 2px rgba(0,0,0,.05),0 4px 16px rgba(0,0,0,.05);
+  --bg:#f6f4ef; --surface:#ffffff; --surface-2:#efebe3; --ink:#1a1916; --ink-2:#55514a;
+  --line:#ddd7cb; --accent:#d9480f; --accent-ink:#ffffff; --accent-soft:#ffeee3;
+  --blue:#1864ab; --blue-soft:#e3effc; --green:#237032; --green-soft:#e3f5e6;
+  --red:#b02525; --red-soft:#fde8e8; --yellow-soft:#fff6d6;
+  --c-claim:#d9480f; --c-reason:#1864ab; --c-evid:#237032;
+  --shadow:0 1px 2px rgba(0,0,0,.05),0 6px 20px rgba(0,0,0,.06);
+  --fs:clamp(18px, 0.75vw + 13px, 23px);
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#171614; --surface:#211f1c; --surface-2:#2a2824; --ink:#efebe3; --ink-2:#b0aa9f;
-    --line:#3a3731; --accent:#ff8a4c; --accent-soft:#3a2418; --blue:#6aa8ff; --blue-soft:#1b2a40;
-    --green:#69db7c; --green-soft:#1c3322; --red:#ff8787; --red-soft:#3d1f1f; --shadow:none;
+    --bg:#151412; --surface:#201e1b; --surface-2:#2a2824; --ink:#f1ede5; --ink-2:#b9b3a8;
+    --line:#3a3731; --accent:#ff8a4c; --accent-ink:#1a1206; --accent-soft:#3a2418;
+    --blue:#74b0ff; --blue-soft:#1a2a40; --green:#6fdc82; --green-soft:#1b3321;
+    --red:#ff8f8f; --red-soft:#3d1f1f; --yellow-soft:#3a3218;
+    --c-claim:#ff8a4c; --c-reason:#74b0ff; --c-evid:#6fdc82; --shadow:none;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#171614; --surface:#211f1c; --surface-2:#2a2824; --ink:#efebe3; --ink-2:#b0aa9f;
-  --line:#3a3731; --accent:#ff8a4c; --accent-soft:#3a2418; --blue:#6aa8ff; --blue-soft:#1b2a40;
-  --green:#69db7c; --green-soft:#1c3322; --red:#ff8787; --red-soft:#3d1f1f; --shadow:none;
+  --bg:#151412; --surface:#201e1b; --surface-2:#2a2824; --ink:#f1ede5; --ink-2:#b9b3a8;
+  --line:#3a3731; --accent:#ff8a4c; --accent-ink:#1a1206; --accent-soft:#3a2418;
+  --blue:#74b0ff; --blue-soft:#1a2a40; --green:#6fdc82; --green-soft:#1b3321;
+  --red:#ff8f8f; --red-soft:#3d1f1f; --yellow-soft:#3a3218;
+  --c-claim:#ff8a4c; --c-reason:#74b0ff; --c-evid:#6fdc82; --shadow:none;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans KR",system-ui,sans-serif;line-height:1.7;font-size:17px;word-break:keep-all}
-.wrap{max-width:860px;margin:0 auto;padding:0 16px}
-header.hero{padding:56px 0 32px}
-.badge{display:inline-block;font-size:13px;font-weight:700;color:var(--accent);background:var(--accent-soft);padding:4px 10px;border-radius:999px}
-h1{font-size:clamp(28px,6vw,42px);line-height:1.25;margin:14px 0 10px;font-weight:900;letter-spacing:-.02em}
-.lead{color:var(--ink-2);margin:0;font-size:18px}
-nav.steps{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
-nav.steps ol{display:flex;gap:6px;list-style:none;margin:0 auto;padding:10px 16px;max-width:860px;overflow-x:auto;scrollbar-width:none}
-nav.steps a{display:block;white-space:nowrap;font-size:14px;font-weight:500;color:var(--ink-2);text-decoration:none;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface)}
-nav.steps a.on{color:#fff;background:var(--accent);border-color:var(--accent)}
-section{padding:40px 0;border-bottom:1px solid var(--line)}
-section:last-of-type{border-bottom:0}
-.step-no{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.06em}
-h2{font-size:clamp(22px,4.5vw,28px);margin:4px 0 16px;line-height:1.35;letter-spacing:-.01em}
-h3{font-size:19px;margin:0 0 8px}
-p{margin:0 0 12px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:var(--shadow)}
-.grid{display:grid;gap:14px}
-@media(min-width:640px){.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}}
-.goal{display:flex;gap:14px;align-items:flex-start;background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);border-radius:16px;padding:18px 20px}
-.goal .ico{font-size:28px;line-height:1}
-.goal strong{display:block;margin-bottom:2px}
-.passage{font-size:16px;background:var(--surface-2);border-radius:12px;padding:14px 16px;margin:10px 0 14px}
-.btn{font:inherit;font-size:15px;font-weight:700;cursor:pointer;border-radius:10px;padding:10px 16px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+html{scroll-behavior:smooth;scroll-snap-type:y proximity;scroll-padding-top:64px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans KR",system-ui,sans-serif;font-size:var(--fs);line-height:1.75;word-break:keep-all;overflow-wrap:break-word}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 60%,transparent);outline-offset:3px}
+
+/* ── top bar ── */
+.topbar{position:fixed;inset:0 0 auto 0;z-index:20;height:60px;display:flex;align-items:center;gap:12px;padding:0 clamp(12px,3vw,40px);background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.topbar .ttl{font-weight:900;font-size:17px;white-space:nowrap}
+.topbar .ttl span{color:var(--accent)}
+.pills{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;flex:1;padding:4px 0}
+.pills a{white-space:nowrap;font-size:15px;font-weight:700;color:var(--ink-2);text-decoration:none;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface)}
+.pills a.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.icon-btn{flex:none;width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-size:19px;display:grid;place-items:center}
+.progress{position:fixed;top:60px;left:0;height:4px;background:var(--accent);z-index:21;width:0;transition:width .2s}
+@media(max-width:700px){.topbar .ttl{display:none}}
+
+/* ── slides ── */
+.slide{min-height:100svh;padding:96px clamp(16px,5vw,80px) 72px;display:flex;flex-direction:column;justify-content:center;scroll-snap-align:start;border-bottom:1px solid var(--line)}
+.slide:nth-child(even){background:color-mix(in srgb,var(--surface-2) 45%,var(--bg))}
+.inner{width:100%;max-width:1360px;margin:0 auto}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-size:.8em;font-weight:900;color:var(--accent);letter-spacing:.04em;margin-bottom:6px}
+.kicker b{background:var(--accent);color:var(--accent-ink);border-radius:8px;padding:0 10px}
+h1{font-size:clamp(40px,6.4vw,92px);line-height:1.15;font-weight:900;letter-spacing:-.03em;margin:.2em 0 .3em}
+h2{font-size:clamp(30px,3.6vw,54px);line-height:1.25;font-weight:900;letter-spacing:-.02em;margin:0 0 .6em}
+h3{font-size:1.15em;margin:0 0 .35em;line-height:1.4}
+p{margin:0 0 .6em}
+.sub{color:var(--ink-2);font-size:1.05em}
+.hl{background:linear-gradient(transparent 58%,color-mix(in srgb,var(--accent) 28%,transparent) 0);font-weight:700}
+.c-claim{color:var(--c-claim)} .c-reason{color:var(--c-reason)} .c-evid{color:var(--c-evid)}
+
+.grid{display:grid;gap:clamp(12px,1.4vw,22px)}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,2vw,32px);box-shadow:var(--shadow)}
+.tip{background:var(--yellow-soft);border-radius:16px;padding:14px 20px;font-size:.92em;margin-top:18px}
+
+/* hero */
+.hero h1 em{font-style:normal;color:var(--accent)}
+.goals{display:grid;gap:14px;margin-top:28px;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr))}
+.goal{display:flex;gap:18px;align-items:center;background:var(--surface);border:2px solid var(--accent);border-radius:22px;padding:22px 26px}
+.goal .n{flex:none;width:56px;height:56px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-size:26px;font-weight:900}
+.goal strong{font-size:1.1em;line-height:1.45}
+.start{margin-top:32px}
+
+/* buttons */
+.btn{cursor:pointer;border-radius:14px;padding:.55em 1.1em;border:2px solid var(--line);background:var(--surface);font-weight:700;font-size:.95em}
 .btn:hover{border-color:var(--accent)}
-.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
-.btn:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 50%,transparent);outline-offset:2px}
-.feedback{display:none;margin-top:12px;padding:12px 14px;border-radius:10px;font-size:15px}
-.feedback.show{display:block}
-.feedback.ok{background:var(--green-soft);color:var(--green)}
-.feedback.no{background:var(--red-soft);color:var(--red)}
-.feedback.info{background:var(--blue-soft);color:var(--blue)}
-.term{text-align:center}
-.term .big{font-size:30px;margin-bottom:4px}
-.term h3{color:var(--accent)}
-.term p{font-size:15px;color:var(--ink-2);margin:0}
-.flow{list-style:none;padding:0;margin:0;display:grid;gap:10px}
-@media(min-width:720px){.flow{grid-template-columns:repeat(5,1fr)}}
-.flow li{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;position:relative}
-.flow li .n{font-size:12px;font-weight:700;color:var(--ink-2)}
-.flow li b{display:block;font-size:16px;margin:2px 0 4px}
-.flow li span{font-size:13.5px;color:var(--ink-2);line-height:1.5;display:block}
-.flow li.today{border:2px solid var(--accent);background:var(--accent-soft)}
-.flow li.today::after{content:"오늘!";position:absolute;top:-10px;right:10px;font-size:12px;font-weight:700;background:var(--accent);color:#fff;padding:1px 8px;border-radius:999px}
-.plan{display:grid;gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface)}
-.plan .row{display:grid;grid-template-columns:110px 1fr;border-bottom:1px solid var(--line)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.big{font-size:1.1em;padding:.7em 1.5em;border-radius:18px}
+
+/* feedback */
+.fb{display:none;margin-top:14px;padding:14px 18px;border-radius:14px;font-size:.95em;font-weight:500}
+.fb.show{display:block}
+.fb.ok{background:var(--green-soft);color:var(--green)}
+.fb.no{background:var(--red-soft);color:var(--red)}
+.fb.info{background:var(--blue-soft);color:var(--blue)}
+
+/* passage choose */
+.passage-card{display:flex;flex-direction:column}
+.passage-card .tag{font-size:.8em;font-weight:900;color:var(--ink-2)}
+.passage-card .txt{font-size:1.05em;line-height:1.8;flex:1;margin:8px 0 16px}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{cursor:pointer;flex:1 1 auto;padding:.5em .9em;border-radius:12px;border:2px solid var(--line);background:var(--surface);font-weight:700;font-size:.88em}
+.seg button.correct{background:var(--green-soft);border-color:var(--green);color:var(--green)}
+.seg button.wrong{background:var(--red-soft);border-color:var(--red);color:var(--red)}
+.seg button:disabled{cursor:default;opacity:1}
+
+/* concept */
+.terms{grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))}
+.term{border-top:8px solid var(--tc);text-align:left}
+.term .em{font-size:2.2em;line-height:1}
+.term h3{font-size:1.6em;color:var(--tc);margin:.2em 0 .1em}
+.term .q{font-weight:700;margin-bottom:.4em}
+.term .ex{background:var(--surface-2);border-radius:12px;padding:10px 14px;font-size:.9em}
+.arrow-chain{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;font-weight:900;font-size:1.1em;margin:22px 0 0}
+.arrow-chain span{padding:6px 16px;border-radius:999px;border:2px solid currentColor}
+
+/* sort */
+.sort-row{display:grid;grid-template-columns:1fr auto;gap:12px 18px;align-items:center;padding:16px 0;border-bottom:1px dashed var(--line)}
+.sort-row:last-child{border-bottom:0}
+.sort-row .s{font-size:1.02em}
+.sort-row .seg{flex-wrap:nowrap}
+.sort-row .seg button{flex:none;min-width:84px}
+@media(max-width:760px){.sort-row{grid-template-columns:1fr}.sort-row .seg button{flex:1;min-width:0}}
+
+/* claim pick */
+.pick{display:grid;gap:12px}
+.pick button{cursor:pointer;text-align:left;padding:16px 20px;border-radius:16px;border:2px solid var(--line);background:var(--surface);font-size:1em;line-height:1.55}
+.pick button.correct{background:var(--green-soft);border-color:var(--green);color:var(--green);font-weight:700}
+.pick button.wrong{background:var(--red-soft);border-color:var(--red);color:var(--red)}
+
+/* process */
+.flow{list-style:none;margin:0;padding:0;display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));counter-reset:f}
+.flow li{position:relative;background:var(--surface);border:2px solid var(--line);border-radius:20px;padding:22px 20px;cursor:pointer;transition:transform .15s}
+.flow li:hover{transform:translateY(-3px)}
+.flow li .num{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--surface-2);font-weight:900;margin-bottom:10px}
+.flow li b{display:block;font-size:1.15em}
+.flow li .d{display:block;font-size:.85em;color:var(--ink-2);line-height:1.55;margin-top:4px}
+.flow li.today{border-color:var(--accent);background:var(--accent-soft)}
+.flow li.today .num{background:var(--accent);color:var(--accent-ink)}
+.flow li.today::after{content:"오늘 할 일";position:absolute;top:-14px;right:16px;font-size:.7em;font-weight:900;background:var(--accent);color:var(--accent-ink);padding:2px 12px;border-radius:999px}
+
+/* example plan */
+.plan{display:grid;border:2px solid var(--line);border-radius:20px;overflow:hidden;background:var(--surface)}
+.plan .row{display:grid;grid-template-columns:minmax(120px,200px) 1fr;border-bottom:1px solid var(--line)}
 .plan .row:last-child{border-bottom:0}
-.plan .k{background:var(--surface-2);font-weight:700;font-size:15px;padding:12px 14px}
-.plan .v{padding:12px 14px;font-size:16px}
-@media(max-width:480px){.plan .row{grid-template-columns:1fr}.plan .k{padding:8px 14px}}
-.chip-row{display:flex;flex-wrap:wrap;gap:8px}
-.chip{font:inherit;font-size:15px;cursor:pointer;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.plan .k{background:var(--surface-2);font-weight:900;padding:16px 20px;display:flex;align-items:center;gap:8px}
+.plan .v{padding:16px 20px;font-size:1.05em}
+@media(max-width:560px){.plan .row{grid-template-columns:1fr}.plan .k{padding:10px 18px}}
+
+/* my plan builder */
+.builder{display:grid;gap:22px;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);align-items:start}
+@media(max-width:1000px){.builder{grid-template-columns:1fr}}
+.qblock{margin-bottom:30px}
+.qblock:last-child{margin-bottom:0}
+.qblock .qh{display:flex;align-items:baseline;gap:10px;font-weight:900;font-size:1.1em;margin-bottom:12px}
+.qblock .qh .no{flex:none;width:36px;height:36px;border-radius:10px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-size:.85em}
+.qblock .qh small{font-weight:500;color:var(--ink-2);font-size:.78em}
+.topics{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(min(100%,150px),1fr))}
+.topic{cursor:pointer;border:2px solid var(--line);background:var(--surface);border-radius:16px;padding:14px 10px;text-align:center;font-weight:700;font-size:.92em;line-height:1.35}
+.topic .e{display:block;font-size:2em;line-height:1.2;margin-bottom:4px}
+.topic[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 25%,transparent)}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{cursor:pointer;padding:.45em 1em;border-radius:999px;border:2px solid var(--line);background:var(--surface);font-weight:700;font-size:.92em}
 .chip[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
-label.f{display:block;font-weight:700;font-size:15px;margin:16px 0 6px}
-label.f small{font-weight:400;color:var(--ink-2)}
-input[type=text],textarea{width:100%;font:inherit;font-size:16px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
-textarea{min-height:84px;resize:vertical}
-.ideas{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 0}
-.ideas button{font:inherit;font-size:13.5px;cursor:pointer;padding:5px 11px;border-radius:999px;border:1px dashed var(--line);background:transparent;color:var(--ink-2)}
-.ideas button:hover{border-color:var(--accent);color:var(--accent)}
-.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
-.quiz .q{margin-bottom:18px}
-.quiz .q:last-child{margin-bottom:0}
-.quiz .q p.qt{font-weight:700;margin-bottom:8px}
-.opts{display:grid;gap:8px}
-.opts button{font:inherit;font-size:15.5px;text-align:left;cursor:pointer;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
-.opts button.correct{background:var(--green-soft);border-color:var(--green);color:var(--green);font-weight:700}
-.opts button.wrong{background:var(--red-soft);border-color:var(--red);color:var(--red)}
-.opts button:disabled{cursor:default}
-.score{font-size:18px;font-weight:700;margin-top:14px}
-.ox{display:flex;gap:8px}
-.ox button{flex:1}
-.next{background:var(--blue-soft);border-radius:16px;padding:20px}
+.chip.add{border-style:dashed;color:var(--ink-2)}
+.opts-claim{display:grid;gap:10px}
+.opts-claim button{cursor:pointer;text-align:left;padding:14px 18px;border-radius:14px;border:2px solid var(--line);background:var(--surface);font-weight:500;font-size:.98em}
+.opts-claim button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);font-weight:700}
+.empty{color:var(--ink-2);font-size:.9em;padding:12px 16px;border:2px dashed var(--line);border-radius:14px}
+input[type=text],textarea{width:100%;font:inherit;font-size:.98em;color:var(--ink);background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:12px 16px}
+textarea{min-height:90px;resize:vertical}
+.mt{margin-top:10px}
+
+.preview{position:sticky;top:84px}
+.preview .card{border:3px solid var(--accent)}
+.preview h3{display:flex;align-items:center;gap:8px;font-size:1.2em}
+.pv-row{padding:12px 0;border-bottom:1px dashed var(--line)}
+.pv-row:last-of-type{border-bottom:0}
+.pv-row .k{font-size:.78em;font-weight:900;color:var(--ink-2)}
+.pv-row .v{font-weight:700;font-size:1.02em;min-height:1.5em}
+.pv-row .v.none{color:var(--ink-2);font-weight:400;font-style:italic}
+.meter{height:12px;border-radius:999px;background:var(--surface-2);overflow:hidden;margin:6px 0 14px}
+.meter i{display:block;height:100%;width:0;background:var(--green);transition:width .3s}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+
+/* quiz */
+.quiz{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr))}
+.quiz .qt{font-weight:900;font-size:1.05em;margin-bottom:12px}
+.quiz .opts{display:grid;gap:10px}
+.quiz .opts button{cursor:pointer;text-align:left;padding:12px 18px;border-radius:14px;border:2px solid var(--line);background:var(--surface);font-size:.96em}
+.quiz .opts button.correct{background:var(--green-soft);border-color:var(--green);color:var(--green);font-weight:700}
+.quiz .opts button.wrong{background:var(--red-soft);border-color:var(--red);color:var(--red)}
+.quiz .ox{grid-template-columns:1fr 1fr}
+.quiz .ox button{text-align:center;font-size:1.4em;font-weight:900}
+.scorebox{margin-top:22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.score{font-size:1.2em;font-weight:900}
+
+/* wrap-up */
+.self{display:grid;gap:12px}
+.self .item{display:grid;grid-template-columns:1fr auto;gap:12px 20px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 22px}
+.faces{display:flex;gap:8px}
+.faces button{cursor:pointer;width:62px;height:62px;border-radius:16px;border:2px solid var(--line);background:var(--surface);font-size:30px;line-height:1;display:grid;place-items:center}
+.faces button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);transform:scale(1.06)}
+.faces button span{display:none}
+@media(max-width:700px){.self .item{grid-template-columns:1fr}.faces button{flex:1}}
+.next{margin-top:24px;background:var(--blue-soft);border-radius:22px;padding:24px 28px}
 .next h3{color:var(--blue)}
-.check{list-style:none;padding:0;margin:0;display:grid;gap:8px}
-.check label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
-.check input{width:20px;height:20px;margin-top:4px;accent-color:var(--accent)}
-footer{padding:32px 0 48px;color:var(--ink-2);font-size:13.5px;text-align:center}
-.theme-toggle{position:fixed;right:14px;bottom:14px;z-index:6;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:20px;cursor:pointer;box-shadow:var(--shadow)}
-@media print{nav.steps,.theme-toggle,.actions,.ideas{display:none}section{padding:16px 0}body{background:#fff}}
+.next .crit{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.next .crit span{background:var(--surface);border-radius:999px;padding:4px 16px;font-weight:700;font-size:.9em}
+
+/* nav buttons */
+.pager{position:fixed;right:clamp(12px,2vw,28px);bottom:clamp(12px,2vw,28px);z-index:20;display:flex;gap:8px}
+.pager button{width:56px;height:56px;border-radius:50%;border:1px solid var(--line);background:var(--surface);box-shadow:var(--shadow);cursor:pointer;font-size:22px;font-weight:900}
+.pager button.fwd{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+
+@media print{
+  .topbar,.progress,.pager,.actions,.slide:not(#mine){display:none!important}
+  .slide{min-height:0;padding:0;border:0}
+  body{background:#fff;color:#000;font-size:14pt}
+  .builder{grid-template-columns:1fr}
+  .builder > .card{display:none}
+  .preview{position:static}
+}
 </style>
 </head>
 <body>
 
-<header class="hero wrap">
-  <span class="badge">중1 국어 · 핵심을 찾고 주장하기 · 1차시</span>
-  <h1>주장하는 글 쓰기<br>첫걸음: 계획 세우기</h1>
-  <p class="lead">주장하는 글이 무엇인지 알고, 내 주변의 문제로 글쓰기 계획을 세워 봅시다.</p>
-</header>
+<div class="topbar">
+  <div class="ttl">주장하는 글 쓰기 <span>1차시</span></div>
+  <nav class="pills" aria-label="수업 단계">
+    <a href="#s0">시작</a>
+    <a href="#s1">생각 열기</a>
+    <a href="#s2">개념</a>
+    <a href="#s3">분류하기</a>
+    <a href="#s4">글쓰기 과정</a>
+    <a href="#s5">예시</a>
+    <a href="#mine">나의 계획</a>
+    <a href="#s7">확인 문제</a>
+    <a href="#s8">정리</a>
+  </nav>
+  <button class="icon-btn" id="fsBtn" aria-label="전체 화면" title="전체 화면">⛶</button>
+  <button class="icon-btn" id="themeBtn" aria-label="밝은/어두운 화면 전환" title="밝은/어두운 화면">🌓</button>
+</div>
+<div class="progress" id="progress"></div>
 
-<nav class="steps" aria-label="수업 단계">
-  <ol>
-    <li><a href="#goal">학습 목표</a></li>
-    <li><a href="#open">생각 열기</a></li>
-    <li><a href="#concept">개념 익히기</a></li>
-    <li><a href="#process">글쓰기 과정</a></li>
-    <li><a href="#example">예시 살펴보기</a></li>
-    <li><a href="#mine">나의 계획</a></li>
-    <li><a href="#quiz">확인 문제</a></li>
-    <li><a href="#wrap">정리</a></li>
-  </ol>
-</nav>
+<main>
 
-<main class="wrap">
-
-<section id="goal">
-  <div class="step-no">STEP 0</div>
-  <h2>오늘의 학습 목표</h2>
-  <div class="grid">
-    <div class="goal"><span class="ico">🎯</span><div><strong>주장하는 글의 뜻과 구성 요소를 설명할 수 있다.</strong>주장 · 이유 · 근거가 무엇인지 구별해요.</div></div>
-    <div class="goal"><span class="ico">📝</span><div><strong>문제 상황을 찾아 주장하는 글쓰기 계획을 세울 수 있다.</strong>문제 상황 · 주장 · 목적 · 예상 독자를 정해요.</div></div>
+<!-- 0 -->
+<section class="slide hero" id="s0">
+  <div class="inner">
+    <div class="kicker">중1 국어 · 2. 핵심을 찾고 주장하기</div>
+    <h1>주장하는 글 쓰기<br><em>첫걸음</em> — 계획 세우기</h1>
+    <p class="sub">내 주변의 문제를 찾아, 친구들을 설득하는 글을 계획해 봐요.</p>
+    <div class="goals">
+      <div class="goal"><div class="n">1</div><strong>주장하는 글의 뜻과<br><span class="c-claim">주장</span> · <span class="c-reason">이유</span> · <span class="c-evid">근거</span>를 알 수 있다.</strong></div>
+      <div class="goal"><div class="n">2</div><strong>문제 상황을 골라<br>주장하는 글쓰기 <span class="hl">계획</span>을 세울 수 있다.</strong></div>
+    </div>
+    <div class="start"><a class="btn primary big" href="#s1" style="text-decoration:none;display:inline-block">시작하기 →</a></div>
   </div>
 </section>
 
-<section id="open">
-  <div class="step-no">STEP 1 · 생각 열기</div>
-  <h2>두 글 중 어느 글이 나를 설득하려고 할까요?</h2>
-  <div class="grid g2">
-    <div class="card">
-      <h3>글 ㉮</h3>
-      <div class="passage">우리 학교 급식실은 1층에 있으며, 점심시간은 12시 20분부터 1시 10분까지이다. 급식은 학년별로 순서를 정해 먹는다.</div>
-      <button class="btn" data-open="a">이 글을 고를래요</button>
-    </div>
-    <div class="card">
-      <h3>글 ㉯</h3>
-      <div class="passage">우리 학교에서는 매일 많은 양의 음식이 버려진다. 음식물 쓰레기는 환경을 오염시키므로, 우리는 먹을 만큼만 받아서 남기지 말아야 한다.</div>
-      <button class="btn" data-open="b">이 글을 고를래요</button>
-    </div>
-  </div>
-  <div class="feedback" id="openFb" role="status"></div>
-</section>
-
-<section id="concept">
-  <div class="step-no">STEP 2 · 개념 익히기</div>
-  <h2>주장하는 글이란?</h2>
-  <div class="card" style="margin-bottom:14px">
-    <p style="margin:0"><b>주장하는 글</b>은 어떤 <b>문제</b>에 대한 글쓴이의 <b>의견(주장)</b>을 밝히고, 읽는 사람이 그 의견에 <b>동의하도록 설득</b>하는 글이에요. 그래서 “왜 그렇게 생각하는지”를 보여 주는 <b>이유</b>와 <b>근거</b>가 꼭 필요해요.</p>
-  </div>
-  <div class="grid g3">
-    <div class="card term"><div class="big">📣</div><h3>주장</h3><p>문제에 대한 글쓴이의 의견<br>“~하자”, “~해야 한다”</p></div>
-    <div class="card term"><div class="big">🤔</div><h3>이유</h3><p>주장이 옳다고 생각하는 까닭<br>“왜냐하면 ~ 때문이다”</p></div>
-    <div class="card term"><div class="big">📊</div><h3>근거</h3><p>이유를 뒷받침하는 사실·자료<br>통계, 기사, 전문가 의견 등</p></div>
-  </div>
-
-  <div class="card" style="margin-top:18px">
-    <h3>🧩 짝 맞추기: 글 ㉯의 문장은 무엇일까요?</h3>
-    <p style="font-size:15px;color:var(--ink-2)">문장을 누르면 정답을 확인할 수 있어요.</p>
-    <div class="opts" id="match">
-      <button data-ans="근거">“우리 학교에서는 매일 많은 양의 음식이 버려진다.”</button>
-      <button data-ans="이유">“음식물 쓰레기는 환경을 오염시킨다.”</button>
-      <button data-ans="주장">“먹을 만큼만 받아서 남기지 말아야 한다.”</button>
-    </div>
-    <p style="font-size:14px;color:var(--ink-2);margin:10px 0 0">💡 실제 글에서는 “하루 평균 ○○kg” 같은 정확한 자료와 출처를 근거로 들면 더 설득력이 높아져요.</p>
-  </div>
-</section>
-
-<section id="process">
-  <div class="step-no">STEP 3 · 글쓰기 과정</div>
-  <h2>주장하는 글은 이런 순서로 써요</h2>
-  <ol class="flow">
-    <li class="today"><span class="n">1단계</span><b>계획하기</b><span>문제 상황, 주장, 목적, 예상 독자 정하기</span></li>
-    <li><span class="n">2단계</span><b>근거 마련하기</b><span>이유를 정리하고 타당한 자료 찾기</span></li>
-    <li><span class="n">3단계</span><b>내용 조직하기</b><span>서론 · 본론 · 결론으로 개요 짜기</span></li>
-    <li><span class="n">4단계</span><b>표현하기</b><span>알맞은 표현으로 글 쓰기</span></li>
-    <li><span class="n">5단계</span><b>고쳐쓰기</b><span>근거와 표현 점검하며 다듬기</span></li>
-  </ol>
-  <p style="margin-top:14px;color:var(--ink-2);font-size:15px">오늘은 <b style="color:var(--accent)">1단계 계획하기</b>를 해 봐요. 계획이 탄탄해야 다음 단계가 쉬워져요!</p>
-</section>
-
-<section id="example">
-  <div class="step-no">STEP 4 · 예시 살펴보기</div>
-  <h2>지우의 글쓰기 계획</h2>
-  <p>지우는 쉬는 시간마다 복도에서 뛰다가 부딪히는 친구들을 자주 보았어요. 다친 친구 이야기도 들었지요. 그래서 이 문제에 대해 주장하는 글을 쓰기로 했어요.</p>
-  <div class="plan">
-    <div class="row"><div class="k">문제 상황</div><div class="v">쉬는 시간에 복도에서 뛰다가 부딪혀 다치는 학생이 많다.</div></div>
-    <div class="row"><div class="k">주장</div><div class="v">복도에서는 오른쪽으로 천천히 걷자.</div></div>
-    <div class="row"><div class="k">글의 목적</div><div class="v"><b>설득</b> — 친구들이 복도에서 걷도록 마음을 움직이기</div></div>
-    <div class="row"><div class="k">예상 독자</div><div class="v">우리 학교 학생들</div></div>
-  </div>
-  <div class="card" style="margin-top:14px">
-    <h3>🔍 계획을 세울 때 생각할 점</h3>
-    <ul style="margin:0;padding-left:20px">
-      <li><b>문제 상황</b>은 내 경험이나 주변에서 들은 이야기에서 찾아요.</li>
-      <li><b>주장</b>은 “~하자”, “~해야 한다”처럼 분명하게 한 문장으로 써요.</li>
-      <li><b>예상 독자</b>를 정하면 어떤 이유와 표현이 효과적인지 고르기 쉬워요.</li>
-    </ul>
-  </div>
-</section>
-
-<section id="mine">
-  <div class="step-no">STEP 5 · 활동</div>
-  <h2>나의 글쓰기 계획 세우기</h2>
-  <p style="color:var(--ink-2)">작성한 내용은 이 기기의 브라우저에 자동 저장돼요. 다 쓰면 복사하거나 인쇄해서 제출하세요.</p>
-  <div class="card">
-    <label class="f" for="pName">이름 <small>(학번)</small></label>
-    <input type="text" id="pName" placeholder="예) 10101 홍길동" autocomplete="off">
-
-    <label class="f" for="pProblem">① 문제 상황 <small>— 내 주변에서 고치고 싶은 일은?</small></label>
-    <textarea id="pProblem" placeholder="예) 교실 사물함 위에 물건이 어지럽게 쌓여 있다."></textarea>
-    <div class="ideas" aria-label="문제 상황 아이디어">
-      <button type="button" data-idea="잠자기 전에 스마트폰을 오래 보는 친구들이 많다.">📱 스마트폰</button>
-      <button type="button" data-idea="급식을 받고 많이 남기는 학생들이 많다.">🍱 급식 잔반</button>
-      <button type="button" data-idea="교실에서 분리배출이 잘 되지 않는다.">♻️ 분리배출</button>
-      <button type="button" data-idea="친구에게 별명을 부르며 놀리는 일이 있다.">💬 언어 습관</button>
-      <button type="button" data-idea="유행 따라 필요하지 않은 물건을 사는 친구들이 있다.">🛍️ 충동 구매</button>
-    </div>
-
-    <label class="f" for="pClaim">② 주장 <small>— “~하자 / ~해야 한다”로 한 문장</small></label>
-    <input type="text" id="pClaim" placeholder="예) 사물함 위를 깨끗하게 정리하자." autocomplete="off">
-    <div class="feedback info" id="claimTip" role="status"></div>
-
-    <label class="f">③ 글의 목적</label>
-    <div class="chip-row" id="pPurpose">
-      <button type="button" class="chip" aria-pressed="false" data-v="설득">설득</button>
-      <button type="button" class="chip" aria-pressed="false" data-v="정보 전달">정보 전달</button>
-      <button type="button" class="chip" aria-pressed="false" data-v="정서 표현">정서 표현</button>
-    </div>
-    <div class="feedback" id="purposeFb" role="status"></div>
-
-    <label class="f" for="pReader">④ 예상 독자 <small>— 누구를 설득하고 싶나요?</small></label>
-    <input type="text" id="pReader" placeholder="예) 우리 반 친구들" autocomplete="off">
-
-    <label class="f" for="pMemo">⑤ 떠오르는 경험·이야기 <small>(선택)</small></label>
-    <textarea id="pMemo" placeholder="예) 지난주에 사물함 위 물건이 떨어져 친구가 다칠 뻔했다."></textarea>
-
-    <div class="actions">
-      <button type="button" class="btn primary" id="btnCopy">📋 내용 복사하기</button>
-      <button type="button" class="btn" onclick="window.print()">🖨️ 인쇄하기</button>
-      <button type="button" class="btn" id="btnReset">지우기</button>
-    </div>
-    <div class="feedback ok" id="copyFb" role="status"></div>
-  </div>
-</section>
-
-<section id="quiz">
-  <div class="step-no">STEP 6 · 확인 문제</div>
-  <h2>배운 내용을 확인해 봐요</h2>
-  <div class="card quiz" id="quizBox">
-    <div class="q" data-q="0">
-      <p class="qt">1. 주장하는 글을 쓰는 가장 중요한 목적은?</p>
-      <div class="opts">
-        <button data-c="0">정보를 정확하게 전달하기</button>
-        <button data-c="1">읽는 사람을 설득하기</button>
-        <button data-c="0">글쓴이의 감정을 표현하기</button>
+<!-- 1 -->
+<section class="slide" id="s1">
+  <div class="inner">
+    <div class="kicker"><b>STEP 1</b> 생각 열기</div>
+    <h2>세 글은 각각 <span class="hl">무엇을 하려는</span> 글일까요?</h2>
+    <div class="grid g3" id="purposeCards">
+      <div class="card passage-card" data-ans="정보 전달">
+        <div class="tag">글 ㉮</div>
+        <div class="txt">우리 학교 급식실은 <b>1층</b>에 있다. 점심시간은 <b>12시 20분</b>부터이며, 학년별로 순서를 정해 먹는다.</div>
+        <div class="seg"><button>정보 전달</button><button>설득</button><button>감정 표현</button></div>
+      </div>
+      <div class="card passage-card" data-ans="설득">
+        <div class="tag">글 ㉯</div>
+        <div class="txt">우리 학교에서는 매일 많은 음식이 버려진다. 음식물 쓰레기는 환경을 오염시킨다. 그러므로 <b>먹을 만큼만 받아야 한다.</b></div>
+        <div class="seg"><button>정보 전달</button><button>설득</button><button>감정 표현</button></div>
+      </div>
+      <div class="card passage-card" data-ans="감정 표현">
+        <div class="tag">글 ㉰</div>
+        <div class="txt">오늘 급식에 내가 제일 좋아하는 떡볶이가 나왔다. 한 입 먹자마자 <b>기분이 날아갈 것처럼 좋았다!</b></div>
+        <div class="seg"><button>정보 전달</button><button>설득</button><button>감정 표현</button></div>
       </div>
     </div>
-    <div class="q" data-q="1">
-      <p class="qt">2. 다음 중 ‘주장’에 해당하는 문장은?</p>
-      <div class="opts">
-        <button data-c="0">우리 반 학생 30명 중 20명이 아침을 거른다.</button>
-        <button data-c="0">아침을 거르면 집중력이 떨어질 수 있다.</button>
-        <button data-c="1">건강을 위해 아침밥을 꼭 챙겨 먹자.</button>
-      </div>
-    </div>
-    <div class="q" data-q="2">
-      <p class="qt">3. 이유를 뒷받침하는 사실이나 자료(통계, 기사 등)를 무엇이라고 할까요?</p>
-      <div class="opts">
-        <button data-c="0">주장</button>
-        <button data-c="1">근거</button>
-        <button data-c="0">독자</button>
-      </div>
-    </div>
-    <div class="q" data-q="3">
-      <p class="qt">4. 글쓰기 계획을 세울 때 예상 독자를 정하면 좋은 점은? (O/X)<br><span style="font-weight:400">“독자에 따라 설득에 효과적인 이유와 표현을 고를 수 있다.”</span></p>
-      <div class="opts ox">
-        <button data-c="1">⭕ O</button>
-        <button data-c="0">❌ X</button>
-      </div>
-    </div>
-    <div class="score" id="score" aria-live="polite"></div>
-    <div class="actions"><button class="btn" id="quizReset">다시 풀기</button></div>
+    <div class="fb" id="s1fb" role="status"></div>
   </div>
 </section>
 
-<section id="wrap">
-  <div class="step-no">STEP 7 · 정리</div>
-  <h2>오늘 배운 내용 스스로 점검하기</h2>
-  <div class="card">
-    <ul class="check">
-      <li><label><input type="checkbox"> 주장하는 글은 독자를 <b>설득</b>하는 글이라는 것을 알았다.</label></li>
-      <li><label><input type="checkbox"> <b>주장 · 이유 · 근거</b>를 구별할 수 있다.</label></li>
-      <li><label><input type="checkbox"> 주장하는 글을 쓰는 <b>5단계 과정</b>을 말할 수 있다.</label></li>
-      <li><label><input type="checkbox"> 문제 상황 · 주장 · 목적 · 예상 독자를 정해 <b>계획</b>을 세웠다.</label></li>
-    </ul>
+<!-- 2 -->
+<section class="slide" id="s2">
+  <div class="inner">
+    <div class="kicker"><b>STEP 2</b> 개념 익히기</div>
+    <h2>주장하는 글이란?</h2>
+    <p style="font-size:1.15em;margin-bottom:1.2em">어떤 문제에 대한 <span class="hl">나의 의견</span>을 밝히고,<br>읽는 사람이 <span class="hl">동의하도록 설득</span>하는 글이에요.</p>
+    <div class="grid terms">
+      <div class="card term" style="--tc:var(--c-claim)">
+        <div class="em">📣</div><h3>주장</h3>
+        <p class="q">“내 생각은 이거야!”</p>
+        <p>문제에 대한 글쓴이의 의견</p>
+        <div class="ex">~하자 / ~해야 한다</div>
+      </div>
+      <div class="card term" style="--tc:var(--c-reason)">
+        <div class="em">🤔</div><h3>이유</h3>
+        <p class="q">“왜냐하면…”</p>
+        <p>주장이 옳다고 생각하는 까닭</p>
+        <div class="ex">~ 때문이다</div>
+      </div>
+      <div class="card term" style="--tc:var(--c-evid)">
+        <div class="em">📊</div><h3>근거</h3>
+        <p class="q">“증거를 보여 줄게!”</p>
+        <p>이유를 뒷받침하는 사실 · 자료</p>
+        <div class="ex">통계, 신문 기사, 전문가 의견</div>
+      </div>
+    </div>
+    <div class="arrow-chain">
+      <span class="c-evid">근거</span>가 <span class="c-reason">이유</span>를 받치고 → <span class="c-reason">이유</span>가 <span class="c-claim">주장</span>을 받쳐요
+    </div>
   </div>
-  <div class="next" style="margin-top:16px">
-    <h3>📌 다음 시간 예고</h3>
-    <p style="margin:0">오늘 세운 주장을 뒷받침할 <b>이유</b>를 정리하고, <b>타당한 근거</b>가 될 자료를 찾아봐요. 자료가 <b>주장과 관련 있는지</b>, <b>주장을 뒷받침하는지</b>, <b>출처를 믿을 만한지</b> 따져 보는 방법을 배울 거예요.</p>
+</section>
+
+<!-- 3 -->
+<section class="slide" id="s3">
+  <div class="inner">
+    <div class="kicker"><b>STEP 3</b> 분류하기</div>
+    <h2>각 문장은 <span class="c-claim">주장</span>·<span class="c-reason">이유</span>·<span class="c-evid">근거</span> 중 무엇일까요?</h2>
+    <div class="grid g2">
+      <div class="card" id="sortBox">
+        <h3>📱 주제: 잠자기 전 스마트폰 사용</h3>
+        <div class="sort-row" data-ans="주장"><div class="s">잠자기 한 시간 전에는 스마트폰을 내려놓자.</div><div class="seg"><button>주장</button><button>이유</button><button>근거</button></div></div>
+        <div class="sort-row" data-ans="이유"><div class="s">스마트폰 화면의 빛이 깊은 잠을 방해하기 때문이다.</div><div class="seg"><button>주장</button><button>이유</button><button>근거</button></div></div>
+        <div class="sort-row" data-ans="근거"><div class="s">우리 반 설문에서 늦게까지 스마트폰을 본 친구의 70%가 “아침에 피곤하다”고 답했다.</div><div class="seg"><button>주장</button><button>이유</button><button>근거</button></div></div>
+        <div class="sort-row" data-ans="이유"><div class="s">잠이 부족하면 수업 시간에 집중하기 어렵다.</div><div class="seg"><button>주장</button><button>이유</button><button>근거</button></div></div>
+        <div class="fb" id="sortFb" role="status"></div>
+      </div>
+      <div class="card">
+        <h3>🎯 가장 <span class="hl">분명한 주장</span>은 어느 것일까요?</h3>
+        <p class="sub" style="font-size:.9em">주장은 한 문장으로, 분명하게!</p>
+        <div class="pick" id="claimPick">
+          <button data-c="0">스마트폰을 조금 덜 쓰면 어떨까 싶기도 하다.</button>
+          <button data-c="1">잠자기 전에는 스마트폰 사용을 줄이자.</button>
+          <button data-c="0">스마트폰으로 하는 게임은 정말 재미있다.</button>
+        </div>
+        <div class="fb" id="claimPickFb" role="status"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="slide" id="s4">
+  <div class="inner">
+    <div class="kicker"><b>STEP 4</b> 글쓰기 과정</div>
+    <h2>주장하는 글은 <span class="hl">5단계</span>로 써요</h2>
+    <ol class="flow" id="flow">
+      <li class="today" data-more="문제 상황 · 주장 · 글의 목적 · 예상 독자를 정해요. 오늘 우리가 할 단계예요!"><div class="num">1</div><b>계획하기</b><span class="d">무엇을, 누구에게, 왜 쓸까?</span></li>
+      <li data-more="주장을 뒷받침하는 이유를 정리하고, 믿을 만한 자료를 찾아 근거로 다듬어요."><div class="num">2</div><b>근거 마련하기</b><span class="d">이유 정리 + 자료 찾기</span></li>
+      <li data-more="서론(문제 상황) – 본론(주장, 이유, 근거) – 결론(주장 강조)으로 개요를 짜요."><div class="num">3</div><b>내용 조직하기</b><span class="d">서론 · 본론 · 결론 개요</span></li>
+      <li data-more="개요를 바탕으로 알맞은 표현을 사용하여 글을 써요."><div class="num">4</div><b>표현하기</b><span class="d">개요에 따라 글 쓰기</span></li>
+      <li data-more="근거가 타당한지, 모호하거나 지나치게 단정적인 표현은 없는지 점검해요."><div class="num">5</div><b>고쳐쓰기</b><span class="d">점검하고 다듬기</span></li>
+    </ol>
+    <div class="fb info show" id="flowFb" role="status">👆 단계를 눌러 보세요. 무엇을 하는지 알려 줄게요.</div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="slide" id="s5">
+  <div class="inner">
+    <div class="kicker"><b>STEP 5</b> 예시 살펴보기</div>
+    <h2>지우의 글쓰기 계획</h2>
+    <div class="grid g2" style="align-items:start">
+      <div>
+        <p style="font-size:1.08em">지우는 쉬는 시간마다 <b>복도에서 뛰다가 부딪히는 친구들</b>을 자주 보았어요. 지난주에는 한 친구가 넘어져 다쳤다는 이야기도 들었지요.</p>
+        <p style="font-size:1.08em">그래서 지우는 이 문제로 <span class="hl">주장하는 글</span>을 쓰기로 했어요.</p>
+        <div class="tip">💡 <b>계획할 때 기억해요</b><br>· 문제 상황은 <b>내 경험, 들은 이야기</b>에서 찾기<br>· 주장은 <b>“~하자 / ~해야 한다”</b> 한 문장으로<br>· 예상 독자에 따라 <b>이유와 표현</b>이 달라져요</div>
+      </div>
+      <div class="plan">
+        <div class="row"><div class="k">🔎 문제 상황</div><div class="v">쉬는 시간에 복도에서 뛰다가 부딪혀 다치는 학생이 많다.</div></div>
+        <div class="row"><div class="k">📣 주장</div><div class="v"><b class="c-claim">복도에서는 오른쪽으로 천천히 걷자.</b></div></div>
+        <div class="row"><div class="k">🎯 글의 목적</div><div class="v"><b>설득</b></div></div>
+        <div class="row"><div class="k">👥 예상 독자</div><div class="v">우리 학교 학생들</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="slide" id="mine">
+  <div class="inner">
+    <div class="kicker"><b>STEP 6</b> 활동</div>
+    <h2>나의 글쓰기 계획 세우기</h2>
+    <div class="builder">
+      <div class="card">
+        <div class="qblock">
+          <div class="qh"><span class="no">1</span>어떤 문제를 고르고 싶나요? <small>하나를 골라요</small></div>
+          <div class="topics" id="topics"></div>
+          <input type="text" id="customProblem" class="mt" placeholder="✏️ 직접 쓰기: 내가 찾은 문제 상황" autocomplete="off" style="display:none">
+        </div>
+        <div class="qblock">
+          <div class="qh"><span class="no">2</span>나의 주장은? <small>고르거나 직접 써요</small></div>
+          <div class="opts-claim" id="claimOpts"><div class="empty">먼저 위에서 문제를 골라 주세요.</div></div>
+          <input type="text" id="claimEdit" class="mt" placeholder="✏️ 주장을 내 말로 고쳐 쓰기 (~하자 / ~해야 한다)" autocomplete="off">
+          <div class="fb" id="claimTip" role="status"></div>
+        </div>
+        <div class="qblock">
+          <div class="qh"><span class="no">3</span>이 글의 목적은? <small>하나를 골라요</small></div>
+          <div class="chips" id="purpose" data-single>
+            <button class="chip" aria-pressed="false" data-v="설득">🗣️ 설득</button>
+            <button class="chip" aria-pressed="false" data-v="정보 전달">📰 정보 전달</button>
+            <button class="chip" aria-pressed="false" data-v="감정 표현">💗 감정 표현</button>
+          </div>
+          <div class="fb" id="purposeFb" role="status"></div>
+        </div>
+        <div class="qblock">
+          <div class="qh"><span class="no">4</span>누구를 설득할까요? <small>여러 개 골라도 돼요</small></div>
+          <div class="chips" id="readers">
+            <button class="chip" aria-pressed="false" data-v="우리 반 친구들">우리 반 친구들</button>
+            <button class="chip" aria-pressed="false" data-v="우리 학교 학생들">우리 학교 학생들</button>
+            <button class="chip" aria-pressed="false" data-v="선생님">선생님</button>
+            <button class="chip" aria-pressed="false" data-v="교장 선생님">교장 선생님</button>
+            <button class="chip" aria-pressed="false" data-v="부모님">부모님</button>
+            <button class="chip" aria-pressed="false" data-v="동생·후배">동생·후배</button>
+            <button class="chip" aria-pressed="false" data-v="지역 주민">지역 주민</button>
+          </div>
+          <input type="text" id="readerEtc" class="mt" placeholder="✏️ 다른 독자가 있다면 직접 쓰기" autocomplete="off">
+        </div>
+        <div class="qblock">
+          <div class="qh"><span class="no">5</span>이 문제를 어떻게 알게 되었나요? <small>여러 개 골라도 돼요</small></div>
+          <div class="chips" id="sources">
+            <button class="chip" aria-pressed="false" data-v="내가 직접 겪었다">🙋 내가 직접 겪었다</button>
+            <button class="chip" aria-pressed="false" data-v="친구에게 들었다">👫 친구에게 들었다</button>
+            <button class="chip" aria-pressed="false" data-v="가족에게 들었다">🏠 가족에게 들었다</button>
+            <button class="chip" aria-pressed="false" data-v="학교에서 보았다">🏫 학교에서 보았다</button>
+            <button class="chip" aria-pressed="false" data-v="뉴스·기사에서 보았다">📺 뉴스·기사에서 보았다</button>
+          </div>
+          <textarea id="memo" class="mt" placeholder="✏️ 떠오르는 경험을 한두 문장으로 (선택)"></textarea>
+        </div>
+      </div>
+
+      <aside class="preview">
+        <div class="card">
+          <h3>📋 나의 글쓰기 계획</h3>
+          <input type="text" id="name" placeholder="학번 · 이름" autocomplete="off">
+          <div class="meter" aria-hidden="true"><i id="meter"></i></div>
+          <div class="pv-row"><div class="k">🔎 문제 상황</div><div class="v" id="pvProblem"></div></div>
+          <div class="pv-row"><div class="k">📣 주장</div><div class="v c-claim" id="pvClaim"></div></div>
+          <div class="pv-row"><div class="k">🎯 글의 목적</div><div class="v" id="pvPurpose"></div></div>
+          <div class="pv-row"><div class="k">👥 예상 독자</div><div class="v" id="pvReaders"></div></div>
+          <div class="pv-row"><div class="k">💭 알게 된 계기</div><div class="v" id="pvSources"></div></div>
+          <div class="actions">
+            <button class="btn primary" id="btnCopy">📋 복사하기</button>
+            <button class="btn" onclick="window.print()">🖨️ 인쇄</button>
+            <button class="btn" id="btnReset">↺ 처음부터</button>
+          </div>
+          <div class="fb" id="copyFb" role="status"></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="slide" id="s7">
+  <div class="inner">
+    <div class="kicker"><b>STEP 7</b> 확인 문제</div>
+    <h2>배운 내용을 확인해 봐요</h2>
+    <div class="quiz" id="quiz">
+      <div class="card q">
+        <p class="qt">Q1. 주장하는 글을 쓰는 가장 중요한 목적은?</p>
+        <div class="opts"><button data-c="0">정보를 정확하게 알려 주기</button><button data-c="1">읽는 사람을 설득하기</button><button data-c="0">나의 감정을 표현하기</button></div>
+      </div>
+      <div class="card q">
+        <p class="qt">Q2. ‘주장’에 해당하는 문장은?</p>
+        <div class="opts"><button data-c="0">우리 반 30명 중 20명이 아침을 거른다.</button><button data-c="0">아침을 거르면 집중력이 떨어질 수 있다.</button><button data-c="1">건강을 위해 아침밥을 꼭 챙겨 먹자.</button></div>
+      </div>
+      <div class="card q">
+        <p class="qt">Q3. 이유를 뒷받침하는 사실이나 자료를 무엇이라고 할까요?</p>
+        <div class="opts"><button data-c="0">주장</button><button data-c="1">근거</button><button data-c="0">독자</button></div>
+      </div>
+      <div class="card q">
+        <p class="qt">Q4. 주장하는 글쓰기의 첫 단계는?</p>
+        <div class="opts"><button data-c="0">고쳐쓰기</button><button data-c="0">내용 조직하기</button><button data-c="1">계획하기</button></div>
+      </div>
+      <div class="card q">
+        <p class="qt">Q5. “예상 독자에 따라 효과적인 이유와 표현이 달라진다.”</p>
+        <div class="opts ox"><button data-c="1">⭕</button><button data-c="0">❌</button></div>
+      </div>
+      <div class="card q">
+        <p class="qt">Q6. “주장은 여러 문장으로 길고 애매하게 쓰는 것이 좋다.”</p>
+        <div class="opts ox"><button data-c="0">⭕</button><button data-c="1">❌</button></div>
+      </div>
+    </div>
+    <div class="scorebox"><div class="score" id="score" aria-live="polite"></div><button class="btn" id="quizReset">다시 풀기</button></div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section class="slide" id="s8">
+  <div class="inner">
+    <div class="kicker"><b>STEP 8</b> 정리</div>
+    <h2>오늘 나는 얼마나 알게 되었나요?</h2>
+    <div class="self" id="self">
+      <div class="item"><div>주장하는 글은 읽는 사람을 <b>설득</b>하는 글이다.</div><div class="faces"></div></div>
+      <div class="item"><div><span class="c-claim"><b>주장</b></span> · <span class="c-reason"><b>이유</b></span> · <span class="c-evid"><b>근거</b></span>를 구별할 수 있다.</div><div class="faces"></div></div>
+      <div class="item"><div>주장하는 글을 쓰는 <b>5단계 과정</b>을 말할 수 있다.</div><div class="faces"></div></div>
+      <div class="item"><div>나만의 <b>글쓰기 계획</b>을 세웠다.</div><div class="faces"></div></div>
+    </div>
+    <div class="next">
+      <h3>📌 다음 시간에는</h3>
+      <p style="margin:0">오늘 세운 주장을 뒷받침할 <b>이유</b>를 정리하고, <b>타당한 근거</b>를 찾아요. 이 세 가지를 따져 볼 거예요.</p>
+      <div class="crit"><span>✔ 주장과 관련 있나?</span><span>✔ 주장을 뒷받침하나?</span><span>✔ 출처를 믿을 만한가?</span></div>
+    </div>
   </div>
 </section>
 
 </main>
 
-<footer>중학교 1학년 국어 · 주장하는 글 쓰기 1차시 수업 자료</footer>
-
-<button class="theme-toggle" id="themeBtn" aria-label="밝은/어두운 화면 전환">🌓</button>
+<div class="pager">
+  <button id="prevBtn" aria-label="이전 단계">↑</button>
+  <button id="nextBtn" class="fwd" aria-label="다음 단계">↓</button>
+</div>
 
 <script>
 (function(){
@@ -334,109 +525,214 @@ footer{padding:32px 0 48px;color:var(--ink-2);font-size:13.5px;text-align:center
     set(k,v){ try { localStorage.setItem(k,v); } catch(e){} },
     del(k){ try { localStorage.removeItem(k); } catch(e){} }
   };
-  const show = (el, cls, html) => { el.className = 'feedback show ' + cls; el.innerHTML = html; };
+  const show = (el, cls, html) => { el.className = 'fb show ' + cls; el.innerHTML = html; };
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
-  // theme
-  const savedTheme = store.get('aw1-theme');
-  if (savedTheme) document.documentElement.dataset.theme = savedTheme;
-  $('#themeBtn').addEventListener('click', () => {
-    const cur = document.documentElement.dataset.theme ||
-      (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    const next = cur === 'dark' ? 'light' : 'dark';
-    document.documentElement.dataset.theme = next; store.set('aw1-theme', next);
-  });
-
-  // nav highlight
-  const links = $$('nav.steps a');
-  const io = new IntersectionObserver(es => {
-    es.forEach(e => { if (e.isIntersecting) {
-      links.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id));
-      const on = links.find(a => a.classList.contains('on'));
-      if (on) on.scrollIntoView({block:'nearest', inline:'center'});
-    }});
-  }, {rootMargin:'-45% 0px -50% 0px'});
-  $$('main section').forEach(s => io.observe(s));
-
-  // open
-  $$('[data-open]').forEach(b => b.addEventListener('click', () => {
-    const fb = $('#openFb');
-    if (b.dataset.open === 'b') show(fb, 'ok', '🎉 맞아요! 글 ㉯는 <b>“남기지 말아야 한다”</b>는 글쓴이의 의견을 밝히고, 그 까닭을 들어 읽는 사람을 <b>설득</b>하고 있어요. 이런 글이 바로 <b>주장하는 글</b>이에요.');
-    else show(fb, 'no', '🤔 글 ㉮는 급식실 위치와 시간을 알려 주기만 하는 <b>정보 전달</b> 글이에요. 글쓴이의 의견이 드러나는 글을 다시 찾아볼까요?');
-  }));
-
-  // match
-  $$('#match button').forEach(b => b.addEventListener('click', () => {
-    if (b.dataset.done) return;
-    b.dataset.done = 1;
-    b.classList.add('correct');
-    b.innerHTML = '<b>[' + b.dataset.ans + ']</b> ' + b.innerHTML;
-  }));
-
-  // plan form
-  const fields = ['pName','pProblem','pClaim','pReader','pMemo'];
-  const saved = JSON.parse(store.get('aw1-plan') || '{}');
-  fields.forEach(id => { const el = $('#'+id); if (saved[id]) el.value = saved[id]; el.addEventListener('input', save); });
-  let purpose = saved.purpose || '';
-  const chips = $$('#pPurpose .chip');
-  const setPurpose = v => {
-    purpose = v;
-    chips.forEach(c => c.setAttribute('aria-pressed', String(c.dataset.v === v)));
+  /* theme */
+  const t = store.get('aw1-theme'); if (t) document.documentElement.dataset.theme = t;
+  $('#themeBtn').onclick = () => {
+    const cur = document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const n = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = n; store.set('aw1-theme', n);
   };
-  if (purpose) setPurpose(purpose);
-  chips.forEach(c => c.addEventListener('click', () => {
-    setPurpose(c.dataset.v); save();
-    const fb = $('#purposeFb');
-    if (c.dataset.v === '설득') show(fb, 'ok', '좋아요! 주장하는 글의 목적은 <b>설득</b>이에요.');
-    else show(fb, 'no', '주장하는 글은 독자가 내 의견에 동의하도록 만드는 글이에요. 어떤 목적이 알맞을까요?');
-  }));
-  function save(){
-    const d = {purpose};
-    fields.forEach(id => d[id] = $('#'+id).value);
-    store.set('aw1-plan', JSON.stringify(d));
-  }
-  // claim tip
-  const claim = $('#pClaim'), tip = $('#claimTip');
-  claim.addEventListener('blur', () => {
-    const v = claim.value.trim();
-    if (!v) { tip.className = 'feedback info'; return; }
-    if (/(하자|해야\s*한다|해야\s*합니다|합시다|말자|말아야)/.test(v)) show(tip, 'ok', '👍 주장이 분명하게 드러나는 문장이에요.');
-    else show(tip, 'info', '💡 “~하자”, “~해야 한다”처럼 써 보면 주장이 더 분명해져요.');
-  });
-  $$('.ideas button').forEach(b => b.addEventListener('click', () => {
-    $('#pProblem').value = b.dataset.idea; save(); $('#pProblem').focus();
-  }));
-  $('#btnCopy').addEventListener('click', async () => {
-    const v = id => $('#'+id).value.trim() || '(미작성)';
-    const text = `[주장하는 글쓰기 계획]\n이름: ${v('pName')}\n① 문제 상황: ${v('pProblem')}\n② 주장: ${v('pClaim')}\n③ 글의 목적: ${purpose || '(미선택)'}\n④ 예상 독자: ${v('pReader')}\n⑤ 경험·이야기: ${v('pMemo')}`;
-    const fb = $('#copyFb');
-    try { await navigator.clipboard.writeText(text); show(fb, 'ok', '✅ 복사했어요! 클래스룸이나 패들렛에 붙여 넣어 제출하세요.'); }
-    catch(e){ show(fb, 'no', '복사가 되지 않았어요. 인쇄하기를 이용하거나 직접 옮겨 적어 주세요.'); }
-  });
-  $('#btnReset').addEventListener('click', () => {
-    if (!confirm('작성한 내용을 모두 지울까요?')) return;
-    fields.forEach(id => $('#'+id).value = ''); setPurpose(''); store.del('aw1-plan');
-    $$('#mine .feedback').forEach(f => f.className = 'feedback');
+  /* fullscreen */
+  $('#fsBtn').onclick = () => {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen?.().catch(()=>{});
+    else document.exitFullscreen?.();
+  };
+
+  /* nav + progress + pager */
+  const slides = $$('.slide'), links = $$('.pills a');
+  let cur = 0;
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    cur = slides.indexOf(e.target);
+    links.forEach((a,i) => a.classList.toggle('on', i === cur));
+    links[cur]?.scrollIntoView({block:'nearest', inline:'center'});
+  }), {rootMargin:'-45% 0px -50% 0px'});
+  slides.forEach(s => io.observe(s));
+  addEventListener('scroll', () => {
+    const h = document.documentElement.scrollHeight - innerHeight;
+    $('#progress').style.width = (h > 0 ? scrollY / h * 100 : 0) + '%';
+  }, {passive:true});
+  const go = d => slides[Math.max(0, Math.min(slides.length-1, cur + d))].scrollIntoView({behavior:'smooth'});
+  $('#prevBtn').onclick = () => go(-1);
+  $('#nextBtn').onclick = () => go(1);
+  addEventListener('keydown', e => {
+    if (/INPUT|TEXTAREA/.test(document.activeElement.tagName)) return;
+    if (e.key === 'PageDown' || e.key === 'ArrowRight') { e.preventDefault(); go(1); }
+    if (e.key === 'PageUp' || e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
   });
 
-  // quiz
-  const qs = $$('#quizBox .q');
-  function score(){
-    const done = qs.filter(q => q.dataset.answered);
-    const right = done.filter(q => q.dataset.answered === 'y').length;
-    $('#score').textContent = done.length === qs.length
-      ? `🏆 ${qs.length}문제 중 ${right}문제 맞혔어요! ${right === qs.length ? '완벽해요!' : '틀린 문제는 위의 개념을 다시 확인해 봐요.'}` : '';
+  /* generic one-shot choice: container with buttons, answer by text or data-c */
+  function oneShot(group, isCorrect, onDone){
+    const btns = $$('button', group);
+    btns.forEach(b => b.addEventListener('click', () => {
+      if (group.dataset.done) return;
+      group.dataset.done = 1;
+      const ok = isCorrect(b);
+      b.classList.add(ok ? 'correct' : 'wrong');
+      btns.forEach(x => { if (isCorrect(x)) x.classList.add('correct'); x.disabled = true; });
+      onDone && onDone(ok);
+    }));
   }
-  qs.forEach(q => $$('button', q).forEach(b => b.addEventListener('click', () => {
-    if (q.dataset.answered) return;
-    const ok = b.dataset.c === '1';
-    q.dataset.answered = ok ? 'y' : 'n';
-    b.classList.add(ok ? 'correct' : 'wrong');
-    $$('button', q).forEach(x => { if (x.dataset.c === '1') x.classList.add('correct'); x.disabled = true; });
-    score();
-  })));
-  $('#quizReset').addEventListener('click', () => {
-    qs.forEach(q => { delete q.dataset.answered; $$('button', q).forEach(b => { b.disabled = false; b.classList.remove('correct','wrong'); }); });
-    score();
+
+  /* STEP1 */
+  const s1 = $$('#purposeCards .passage-card'); let s1n = 0, s1ok = 0;
+  s1.forEach(c => oneShot($('.seg', c), b => b.textContent === c.dataset.ans, ok => {
+    s1n++; if (ok) s1ok++;
+    if (s1n === s1.length) show($('#s1fb'), s1ok === 3 ? 'ok' : 'info',
+      `${s1ok === 3 ? '🎉 모두 맞혔어요!' : `👍 ${s1ok}개 맞혔어요.`} 글 ㉯처럼 <b>“~해야 한다”</b>는 의견을 밝히고 읽는 사람을 <b>설득</b>하는 글이 바로 <b>주장하는 글</b>이에요.`);
+  }));
+
+  /* STEP3 sort */
+  const rows = $$('#sortBox .sort-row'); let sn = 0, sok = 0;
+  rows.forEach(r => oneShot($('.seg', r), b => b.textContent === r.dataset.ans, ok => {
+    sn++; if (ok) sok++;
+    if (sn === rows.length) show($('#sortFb'), sok === rows.length ? 'ok' : 'info',
+      `${sok}/${rows.length} 정답! <b class="c-claim">주장</b>은 의견, <b class="c-reason">이유</b>는 “~ 때문이다”, <b class="c-evid">근거</b>는 숫자·조사 같은 <b>사실 자료</b>예요.`);
+  }));
+  oneShot($('#claimPick'), b => b.dataset.c === '1', ok => show($('#claimPickFb'), ok ? 'ok' : 'no',
+    ok ? '🎯 정답! “~하자”로 의견을 분명하게 밝혔어요.' : '아쉬워요. “~싶기도 하다”는 애매하고, “재미있다”는 의견이 아니라 느낌이에요. 정답은 초록색 문장!'));
+
+  /* STEP4 flow */
+  $$('#flow li').forEach(li => li.addEventListener('click', () => {
+    show($('#flowFb'), 'info', `<b>${li.querySelector('b').textContent}</b> — ${li.dataset.more}`);
+  }));
+
+  /* STEP6 builder */
+  const TOPICS = [
+    {e:'📱', n:'잠들기 전 스마트폰', p:'잠자기 전에 스마트폰을 오래 보는 친구들이 많다.', c:['잠자기 한 시간 전에는 스마트폰을 내려놓자.','스마트폰 사용 시간을 스스로 정해 지키자.']},
+    {e:'🍱', n:'급식 잔반', p:'급식을 받고 많이 남기는 학생들이 많다.', c:['먹을 만큼만 받아서 남기지 말자.','한 달에 한 번 ‘잔반 없는 날’을 정하자.']},
+    {e:'♻️', n:'분리배출', p:'교실에서 쓰레기 분리배출이 잘 되지 않는다.', c:['쓰레기는 종류별로 나누어 버리자.','반마다 분리배출 도우미를 정하자.']},
+    {e:'💬', n:'언어 습관', p:'친구에게 비속어나 놀리는 별명을 쓰는 일이 있다.', c:['친구를 존중하는 바른 말을 쓰자.','놀리는 별명 대신 이름을 부르자.']},
+    {e:'🛍️', n:'충동 구매', p:'유행을 따라 꼭 필요하지 않은 물건을 사는 친구들이 있다.', c:['물건을 사기 전에 꼭 필요한지 생각하자.','용돈 기록장을 써서 계획적으로 소비하자.']},
+    {e:'🏃', n:'복도 안전', p:'쉬는 시간에 복도에서 뛰다가 부딪히는 일이 많다.', c:['복도에서는 오른쪽으로 천천히 걷자.','쉬는 시간 복도 안전 규칙을 만들자.']},
+    {e:'📚', n:'독서', p:'책을 거의 읽지 않는 학생들이 많다.', c:['하루 10분씩 책을 읽자.','학교에 아침 독서 시간을 만들어야 한다.']},
+    {e:'💧', n:'물 낭비', p:'손을 씻을 때 물을 계속 틀어 놓는 경우가 많다.', c:['손에 비누칠할 때는 수도꼭지를 잠그자.','물 절약 안내문을 화장실에 붙이자.']},
+    {e:'🎮', n:'게임 시간', p:'게임을 하느라 해야 할 일을 미루는 친구들이 있다.', c:['할 일을 먼저 끝내고 게임을 하자.','하루 게임 시간을 정해서 지키자.']},
+    {e:'🚸', n:'등굣길 안전', p:'등굣길에 이어폰을 끼고 휴대폰을 보며 걷는 학생이 많다.', c:['길을 걸을 때는 휴대폰을 보지 말자.','횡단보도에서는 이어폰을 빼자.']},
+    {e:'🧹', n:'교실 청결', p:'교실 바닥과 사물함 위가 늘 어지럽다.', c:['자기 자리는 스스로 정리하자.','하루 5분 ‘함께 청소 시간’을 갖자.']},
+    {e:'✏️', n:'직접 쓰기', p:'', c:[], custom:true}
+  ];
+  const S = Object.assign({topic:-1, custom:'', claim:'', purpose:'', readers:[], readerEtc:'', sources:[], memo:'', name:''},
+    JSON.parse(store.get('aw1-plan2') || '{}'));
+  const save = () => { store.set('aw1-plan2', JSON.stringify(S)); render(); };
+
+  const tg = $('#topics');
+  TOPICS.forEach((tp, i) => {
+    const b = document.createElement('button');
+    b.className = 'topic'; b.type = 'button'; b.setAttribute('aria-pressed', 'false');
+    b.innerHTML = `<span class="e">${tp.e}</span>${tp.n}`;
+    b.onclick = () => { if (S.topic !== i) { S.topic = i; S.claim = ''; } save(); if (tp.custom) $('#customProblem').focus(); };
+    tg.appendChild(b);
+  });
+  const cp = $('#customProblem'); cp.value = S.custom;
+  cp.oninput = () => { S.custom = cp.value; save(); };
+
+  const ce = $('#claimEdit');
+  ce.oninput = () => { S.claim = ce.value; save(); };
+  ce.onblur = claimTip;
+  function claimTip(){
+    const v = S.claim.trim(), tip = $('#claimTip');
+    if (!v) { tip.className = 'fb'; return; }
+    if (/(하자|해야\s*한다|해야\s*합니다|합시다|말자|말아야)\.?$/.test(v)) show(tip, 'ok', '👍 주장이 분명하게 드러나요!');
+    else show(tip, 'info', '💡 “~하자”, “~해야 한다”로 끝내면 주장이 더 분명해져요.');
+  }
+
+  function chipGroup(id, key, single, onPick){
+    $$('#'+id+' .chip').forEach(c => c.onclick = () => {
+      const v = c.dataset.v;
+      if (single) S[key] = S[key] === v ? '' : v;
+      else S[key] = S[key].includes(v) ? S[key].filter(x => x !== v) : [...S[key], v];
+      save(); onPick && onPick(v);
+    });
+  }
+  chipGroup('purpose', 'purpose', true, v => {
+    if (S.purpose !== v) { $('#purposeFb').className = 'fb'; return; }
+    if (v === '설득') show($('#purposeFb'), 'ok', '✅ 맞아요! 주장하는 글의 목적은 <b>설득</b>이에요.');
+    else show($('#purposeFb'), 'no', '🤔 주장하는 글은 독자가 내 의견에 <b>동의하게</b> 만드는 글이에요. 다시 골라 볼까요?');
+  });
+  chipGroup('readers', 'readers', false);
+  chipGroup('sources', 'sources', false);
+  const re = $('#readerEtc'); re.value = S.readerEtc; re.oninput = () => { S.readerEtc = re.value; save(); };
+  const me = $('#memo'); me.value = S.memo; me.oninput = () => { S.memo = me.value; save(); };
+  const nm = $('#name'); nm.value = S.name; nm.oninput = () => { S.name = nm.value; save(); };
+
+  const problemText = () => { const tp = TOPICS[S.topic]; return !tp ? '' : tp.custom ? S.custom.trim() : tp.p; };
+  const readersText = () => [...S.readers, ...(S.readerEtc.trim() ? [S.readerEtc.trim()] : [])].join(', ');
+  const sourcesText = () => [...S.sources, ...(S.memo.trim() ? ['“' + S.memo.trim() + '”'] : [])].join(' / ');
+
+  function render(){
+    $$('#topics .topic').forEach((b,i) => b.setAttribute('aria-pressed', String(i === S.topic)));
+    const tp = TOPICS[S.topic];
+    cp.style.display = tp && tp.custom ? 'block' : 'none';
+    const box = $('#claimOpts');
+    if (!tp) box.innerHTML = '<div class="empty">먼저 위에서 문제를 골라 주세요.</div>';
+    else if (tp.custom) box.innerHTML = '<div class="empty">직접 고른 문제예요. 아래 칸에 나의 주장을 써 주세요.</div>';
+    else {
+      box.innerHTML = '';
+      tp.c.forEach(cl => {
+        const b = document.createElement('button'); b.type = 'button';
+        b.textContent = '📣 ' + cl; b.setAttribute('aria-pressed', String(S.claim === cl));
+        b.onclick = () => { S.claim = cl; ce.value = cl; save(); claimTip(); };
+        box.appendChild(b);
+      });
+    }
+    if (document.activeElement !== ce) ce.value = S.claim;
+    $$('#purpose .chip').forEach(c => c.setAttribute('aria-pressed', String(c.dataset.v === S.purpose)));
+    $$('#readers .chip').forEach(c => c.setAttribute('aria-pressed', String(S.readers.includes(c.dataset.v))));
+    $$('#sources .chip').forEach(c => c.setAttribute('aria-pressed', String(S.sources.includes(c.dataset.v))));
+    const vals = [problemText(), S.claim.trim(), S.purpose, readersText(), sourcesText()];
+    ['pvProblem','pvClaim','pvPurpose','pvReaders','pvSources'].forEach((id,i) => {
+      const el = $('#'+id); el.classList.toggle('none', !vals[i]);
+      el.innerHTML = vals[i] ? esc(vals[i]) : '아직 고르지 않았어요';
+    });
+    $('#meter').style.width = (vals.filter(Boolean).length / vals.length * 100) + '%';
+  }
+  render();
+
+  $('#btnCopy').onclick = async () => {
+    const d = v => v || '(미작성)';
+    const text = `[주장하는 글쓰기 계획]\n이름: ${d(S.name.trim())}\n문제 상황: ${d(problemText())}\n주장: ${d(S.claim.trim())}\n글의 목적: ${d(S.purpose)}\n예상 독자: ${d(readersText())}\n알게 된 계기: ${d(sourcesText())}`;
+    try { await navigator.clipboard.writeText(text); show($('#copyFb'), 'ok', '✅ 복사했어요! 클래스룸이나 패들렛에 붙여 넣어 제출하세요.'); }
+    catch(e){ show($('#copyFb'), 'no', '복사가 되지 않았어요. 인쇄하기를 이용해 주세요.'); }
+  };
+  $('#btnReset').onclick = () => {
+    if (!confirm('작성한 계획을 모두 지울까요?')) return;
+    Object.assign(S, {topic:-1, custom:'', claim:'', purpose:'', readers:[], readerEtc:'', sources:[], memo:'', name:''});
+    [cp, ce, re, me, nm].forEach(x => x.value = '');
+    $$('#mine .fb').forEach(f => f.className = 'fb');
+    store.del('aw1-plan2'); render();
+  };
+
+  /* STEP7 quiz */
+  const qs = $$('#quiz .q'); let qn = 0, qok = 0;
+  function bindQuiz(){
+    qn = 0; qok = 0; $('#score').textContent = '';
+    qs.forEach(q => {
+      const g = $('.opts', q); delete g.dataset.done;
+      $$('button', g).forEach(b => { b.disabled = false; b.classList.remove('correct','wrong'); });
+    });
+  }
+  qs.forEach(q => oneShot($('.opts', q), b => b.dataset.c === '1', ok => {
+    qn++; if (ok) qok++;
+    if (qn === qs.length) $('#score').textContent = `🏆 ${qs.length}문제 중 ${qok}문제 정답! ${qok === qs.length ? '완벽해요!' : '틀린 문제는 개념을 다시 살펴봐요.'}`;
+  }));
+  $('#quizReset').onclick = bindQuiz;
+
+  /* STEP8 self check */
+  const FACES = [['😀','잘 알아요'],['🙂','조금 알아요'],['🤔','아직 어려워요']];
+  const selfSaved = JSON.parse(store.get('aw1-self') || '{}');
+  $$('#self .item').forEach((it, i) => {
+    const f = $('.faces', it);
+    FACES.forEach(([e, l], k) => {
+      const b = document.createElement('button'); b.type = 'button';
+      b.title = l; b.setAttribute('aria-label', l); b.setAttribute('aria-pressed', String(selfSaved[i] === k));
+      b.innerHTML = e + `<span>${l}</span>`;
+      b.onclick = () => { selfSaved[i] = k; store.set('aw1-self', JSON.stringify(selfSaved)); $$('button', f).forEach((x,j) => x.setAttribute('aria-pressed', String(j === k))); };
+      f.appendChild(b);
+    });
   });
 })();
 </script>
